@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070d">
+<meta name="description" content="SYSTEM BREAKERS IA — Inteligência artificial moderna e tecnológica.">
+
+<title>SYSTEM BREAKERS IA</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#03050a;
+    --bg2:#070b13;
+    --card:rgba(13,19,31,.72);
+    --card2:rgba(20,29,46,.55);
+    --line:rgba(255,255,255,.09);
+    --text:#f5f8ff;
+    --muted:#8490a5;
+    --blue:#168cff;
+    --blue2:#00b7ff;
+    --cyan:#54dcff;
+    --green:#27e39a;
+    --danger:#ff5570;
+    --shadow:0 25px 80px rgba(0,0,0,.55);
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% -10%,rgba(0,139,255,.18),transparent 35%),
+        radial-gradient(circle at 100% 80%,rgba(0,183,255,.08),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+.background{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-2;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+    opacity:.18;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:50px 50px;
+    mask-image:linear-gradient(to bottom,black,transparent 90%);
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.22;
+}
+
+.orb.one{
+    width:350px;
+    height:350px;
+    background:#007bff;
+    left:-160px;
+    top:15%;
+    animation:float 12s ease-in-out infinite;
+}
+
+.orb.two{
+    width:300px;
+    height:300px;
+    background:#00bfff;
+    right:-120px;
+    bottom:10%;
+    animation:float 15s ease-in-out infinite reverse;
+}
+
+@keyframes float{
+    0%,100%{transform:translate(0,0)}
+    50%{transform:translate(35px,-30px)}
+}
+
+/* APP */
+
+.app{
+    min-height:100vh;
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:270px;
+    min-height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    padding:22px 16px;
+    background:rgba(4,7,13,.78);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border-right:1px solid var(--line);
+    z-index:20;
+    display:flex;
+    flex-direction:column;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:5px 8px 28px;
+}
+
+.logo-icon{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    background:
+        linear-gradient(145deg,#159bff,#0753c9);
+    box-shadow:
+        0 0 30px rgba(0,139,255,.3),
+        inset 0 1px 0 rgba(255,255,255,.25);
+    font-size:20px;
+}
+
+.logo-text{
+    font-weight:800;
+    letter-spacing:-.5px;
+}
+
+.logo-text span{
+    display:block;
+    color:var(--blue2);
+    font-size:11px;
+    letter-spacing:2px;
+    margin-top:2px;
+}
+
+.new-chat{
+    width:100%;
+    border:1px solid rgba(70,167,255,.3);
+    background:linear-gradient(135deg,rgba(20,137,255,.17),rgba(0,91,190,.08));
+    color:white;
+    padding:13px;
+    border-radius:13px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.new-chat:hover{
+    transform:translateY(-1px);
+    border-color:rgba(70,167,255,.65);
+    background:rgba(20,137,255,.22);
+}
+
+.nav{
+    margin-top:20px;
+}
+
+.nav-title{
+    color:#59667b;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.8px;
+    padding:0 10px 9px;
+}
+
+.nav-item{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#9aa6ba;
+    padding:11px 12px;
+    border-radius:10px;
+    text-align:left;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    font-size:13px;
+    margin-bottom:3px;
+    transition:.2s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:rgba(255,255,255,.055);
+    color:white;
+}
+
+.nav-item.active{
+    box-shadow:inset 2px 0 var(--blue);
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+}
+
+.status-card{
+    padding:13px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.025);
+    border-radius:13px;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12px;
+    color:#aeb9ca;
+}
+
+.status-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 12px var(--green);
+}
+
+.version{
+    color:#4d5a6e;
+    font-size:10px;
+    margin-top:8px;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:270px;
+    width:calc(100% - 270px);
+    min-height:100vh;
+}
+
+/* TOPBAR */
+
+.topbar{
+    height:74px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 32px;
+    border-bottom:1px solid rgba(255,255,255,.055);
+    background:rgba(3,5,10,.42);
+    backdrop-filter:blur(20px);
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.model{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#c9d3e3;
+    font-size:13px;
+    font-weight:650;
+}
+
+.model-icon{
+    width:27px;
+    height:27px;
+    display:grid;
+    place-items:center;
+    border-radius:8px;
+    background:rgba(22,140,255,.13);
+    border:1px solid rgba(22,140,255,.2);
+}
+
+.top-actions{
+    display:flex;
+    gap:8px;
+}
+
+.icon-btn{
+    width:37px;
+    height:37px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    color:#aab5c7;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.icon-btn:hover{
+    color:white;
+    background:rgba(255,255,255,.07);
+}
+
+/* CHAT */
+
+.chat{
+    max-width:1000px;
+    margin:auto;
+    min-height:calc(100vh - 74px);
+    padding:55px 25px 130px;
+}
+
+/* HERO */
+
+.hero{
+    min-height:calc(100vh - 230px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    animation:appear .7s ease;
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.ai-core{
+    width:118px;
+    height:118px;
+    border-radius:36px;
+    position:relative;
+    display:grid;
+    place-items:center;
+    margin-bottom:30px;
+}
+
+.ai-core::before{
+    content:"";
+    position:absolute;
+    inset:-25px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(0,160,255,.2),transparent 65%);
+    animation:pulse 3s ease-in-out infinite;
+}
+
+.ai-core::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:36px;
+    border:1px solid rgba(75,183,255,.35);
+    box-shadow:
+        0 0 50px rgba(0,139,255,.22),
+        inset 0 0 30px rgba(0,139,255,.1);
+    animation:corePulse 3s ease-in-out infinite;
+}
+
+.core-inner{
+    width:88px;
+    height:88px;
+    border-radius:28px;
+    display:grid;
+    place-items:center;
+    background:
+        radial-gradient(circle at 35% 25%,#58d9ff,#0876e9 50%,#062d77);
+    box-shadow:
+        0 0 50px rgba(0,153,255,.38),
+        inset 0 1px 5px rgba(255,255,255,.4);
+    font-size:38px;
+    position:relative;
+    z-index:2;
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(.85);opacity:.55}
+    50%{transform:scale(1.1);opacity:1}
+}
+
+@keyframes corePulse{
+    0%,100%{transform:scale(1);opacity:.6}
+    50%{transform:scale(1.06);opacity:1}
+}
+
+.hero h1{
+    font-size:clamp(36px,6vw,65px);
+    letter-spacing:-3px;
+    line-height:1;
+    font-weight:850;
+    margin-bottom:17px;
+}
+
+.hero h1 span{
+    background:linear-gradient(90deg,#fff,#79d7ff,#168cff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    color:#7f8da2;
+    font-size:15px;
+    max-width:520px;
+    line-height:1.7;
+}
+
+/* QUICK ACTIONS */
+
+.quick{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:30px;
+}
+
+.quick button{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    color:#aeb9ca;
+    border-radius:11px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-size:12px;
+    transition:.2s;
+}
+
+.quick button:hover{
+    color:white;
+    border-color:rgba(36,153,255,.4);
+    background:rgba(22,140,255,.08);
+    transform:translateY(-2px);
+}
+
+/* MESSAGES */
+
+.messages{
+    display:none;
+}
+
+.message{
+    display:flex;
+    gap:13px;
+    margin:28px 0;
+    animation:messageIn .35s ease;
+}
+
+@keyframes messageIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.avatar{
+    width:34px;
+    height:34px;
+    min-width:34px;
+    border-radius:10px;
+    display:grid;
+    place-items:center;
+    font-size:13px;
+    font-weight:800;
+}
+
+.user-avatar{
+    background:#182132;
+    color:#aebbd0;
+}
+
+.ai-avatar{
+    background:linear-gradient(145deg,#118fff,#0750bd);
+    box-shadow:0 0 18px rgba(0,139,255,.2);
+}
+
+.message-content{
+    max-width:780px;
+    line-height:1.7;
+    font-size:14px;
+    color:#d3dbe8;
+}
+
+.message-content .name{
+    color:#718097;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+/* INPUT */
+
+.input-wrap{
+    position:fixed;
+    bottom:22px;
+    left:calc(270px + 50%);
+    transform:translateX(-50%);
+    width:min(900px,calc(100% - 50px));
+    z-index:30;
+}
+
+.input-box{
+    min-height:62px;
+    border-radius:19px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(9,14,23,.82);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.045);
+    display:flex;
+    align-items:flex-end;
+    padding:9px;
+    gap:7px;
+}
+
+#prompt{
+    flex:1;
+    resize:none;
+    max-height:160px;
+    min-height:43px;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:white;
+    padding:12px 8px;
+    font:inherit;
+    font-size:14px;
+}
+
+#prompt::placeholder{
+    color:#657288;
+}
+
+.input-btn{
+    width:43px;
+    height:43px;
+    border:0;
+    border-radius:12px;
+    background:rgba(255,255,255,.045);
+    color:#8290a5;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.input-btn:hover{
+    color:white;
+    background:rgba(255,255,255,.08);
+}
+
+.send{
+    background:linear-gradient(145deg,#179aff,#0860d5);
+    color:white;
+    box-shadow:0 5px 20px rgba(0,139,255,.22);
+}
+
+.send:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 25px rgba(0,139,255,.35);
+}
+
+/* TYPING */
+
+.typing{
+    display:none;
+    align-items:center;
+    gap:5px;
+    padding:9px 0;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#48bfff;
+    animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){animation-delay:.15s}
+.typing span:nth-child(3){animation-delay:.3s}
+
+@keyframes typing{
+    0%,60%,100%{opacity:.25;transform:translateY(0)}
+    30%{opacity:1;transform:translateY(-4px)}
+}
+
+/* MOBILE */
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:850px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.3s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .mobile-menu{
+        display:grid;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .chat{
+        padding:30px 16px 130px;
+    }
+
+    .input-wrap{
+        left:50%;
+        width:calc(100% - 24px);
+        bottom:12px;
+    }
+
+    .hero{
+        min-height:calc(100vh - 190px);
+    }
+
+    .hero h1{
+        font-size:42px;
+        letter-spacing:-2px;
+    }
+
+    .hero p{
+        font-size:13px;
+    }
+
+    .ai-core{
+        width:100px;
+        height:100px;
+    }
+
+    .core-inner{
+        width:76px;
+        height:76px;
+        font-size:31px;
+    }
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width:7px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#182337;
+    border-radius:10px;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    place-items:center;
+    padding:20px;
+    background:rgba(0,0,0,.65);
+    backdrop-filter:blur(12px);
+}
+
+.modal.show{
+    display:grid;
+}
+
+.modal-card{
+    width:min(440px,100%);
+    border:1px solid var(--line);
+    border-radius:22px;
+    background:#0a0f19;
+    box-shadow:var(--shadow);
+    padding:25px;
+    animation:modalIn .25s ease;
+}
+
+@keyframes modalIn{
+    from{
+        opacity:0;
+        transform:scale(.96) translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.modal-head h2{
+    font-size:18px;
+}
+
+.close{
+    border:0;
+    background:transparent;
+    color:#8995a8;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.setting{
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.setting:last-child{
+    border-bottom:0;
+}
+
+.setting small{
+    color:#69778c;
+    display:block;
+    margin-top:4px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="background">
+    <div class="grid"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+</div>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <div class="logo-text">
+                SYSTEM BREAKERS
+                <span>ARTIFICIAL INTELLIGENCE</span>
+            </div>
+        </div>
+
+        <button class="new-chat" onclick="newChat()">
+            ＋ Nova conversa
+        </button>
+
+        <nav class="nav">
+
+            <div class="nav-title">PLATAFORMA</div>
+
+            <button class="nav-item active" onclick="showHome()">
+                ◉ &nbsp; Início
+            </button>
+
+            <button class="nav-item">
+                ◫ &nbsp; Histórico
+            </button>
+
+            <button class="nav-item">
+                ✦ &nbsp; Explorar IA
+            </button>
+
+            <div class="nav-title" style="margin-top:25px">
+                FERRAMENTAS
+            </div>
+
+            <button class="nav-item">
+                &lt;/&gt; &nbsp; Programação
+            </button>
+
+            <button class="nav-item">
+                ◇ &nbsp; Análise
+            </button>
+
+            <button class="nav-item">
+                ◈ &nbsp; Projetos
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <button class="nav-item" onclick="openSettings()">
+                ⚙ &nbsp; Configurações
+            </button>
+
+            <div class="status-card">
+                <div class="status">
+                    <span class="status-dot"></span>
+                    Sistema operacional
+                </div>
+                <div class="version">
+                    SYSTEM BREAKERS IA • v1.0
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="model">
+                <button class="icon-btn mobile-menu" onclick="toggleSidebar()">☰</button>
+                <div class="model-icon">✦</div>
+                SYSTEM BREAKERS IA
+            </div>
+
+            <div class="top-actions">
+                <button class="icon-btn" onclick="openSettings()">⚙</button>
+            </div>
+
+        </header>
+
+        <section class="chat" id="chat">
+
+            <!-- HERO -->
+            <div class="hero" id="hero">
+
+                <div class="ai-core">
+                    <div class="core-inner">✦</div>
+                </div>
+
+                <h1>
+                    Olá, <span>Breaker.</span>
+                </h1>
+
+                <p>
+                    Uma inteligência artificial criada para pensar,
+                    criar, programar e transformar suas ideias em realidade.
+                </p>
+
+                <div class="quick">
+                    <button onclick="quickPrompt('Crie um projeto para mim')">✦ Criar projeto</button>
+                    <button onclick="quickPrompt('Me ajude a programar')">💻 Programação</button>
+                    <button onclick="quickPrompt('Explique algo de forma simples')">🧠 Explicar</button>
+                    <button onclick="quickPrompt('Analise este problema')">◇ Analisar</button>
+                </div>
+
+            </div>
+
+            <!-- MESSAGES -->
+            <div class="messages" id="messages"></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<!-- INPUT -->
+
+<div class="input-wrap">
+
+    <div class="input-box">
+
+        <button class="input-btn" title="Anexar">
+            ＋
+        </button>
+
+        <textarea
+            id="prompt"
+            rows="1"
+            placeholder="Pergunte qualquer coisa..."
+            onkeydown="handleKey(event)"
+        ></textarea>
+
+        <button class="input-btn" title="Voz" onclick="voiceInput()">
+            ◉
+        </button>
+
+        <button class="input-btn send" title="Enviar" onclick="sendMessage()">
+            ↑
+        </button>
+
+    </div>
+
+</div>
+
+<!-- SETTINGS MODAL -->
+
+<div class="modal" id="settingsModal">
+
+    <div class="modal-card">
+
+        <div class="modal-head">
+            <h2>Configurações</h2>
+            <button class="close" onclick="closeSettings()">×</button>
+        </div>
+
+        <div class="setting">
+            <div>
+                Aparência
+                <small>Interface SYSTEM BREAKERS</small>
+            </div>
+            <strong>Dark</strong>
+        </div>
+
+        <div class="setting">
+            <div>
+                Modelo
+                <small>Motor de inteligência</small>
+            </div>
+            <strong>IA</strong>
+        </div>
+
+        <div class="setting">
+            <div>
+                Status
+                <small>Conexão da plataforma</small>
+            </div>
+            <strong style="color:#27e39a">ONLINE</strong>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   SYSTEM BREAKERS IA
+   FRONTEND
+   ========================================================= */
+
+const promptInput = document.getElementById("prompt");
+const hero = document.getElementById("hero");
+const messages = document.getElementById("messages");
+
+let conversation = [];
+
+/* AUTO RESIZE */
+
+promptInput.addEventListener("input", () => {
+    promptInput.style.height = "auto";
+    promptInput.style.height =
+        Math.min(promptInput.scrollHeight,160) + "px";
+});
+
+/* ENTER */
+
+function handleKey(event){
+
+    if(event.key === "Enter" && !event.shiftKey){
+
+        event.preventDefault();
+        sendMessage();
+
+    }
+
+}
+
+/* SEND */
+
+async function sendMessage(){
+
+    const text = promptInput.value.trim();
+
+    if(!text) return;
+
+    hero.style.display = "none";
+    messages.style.display = "block";
+
+    addMessage("user",text);
+
+    promptInput.value = "";
+    promptInput.style.height = "43px";
+
+    conversation.push({
+        role:"user",
+        content:text
+    });
+
+    showTyping();
+
+    /*
+       AQUI ENTRA A API REAL NA PARTE 2.
+
+       Por enquanto usamos uma resposta local
+       para a interface funcionar.
+    */
+
+    setTimeout(() => {
+
+        hideTyping();
+
+        const response = localAI(text);
+
+        addMessage("ai",response);
+
+        conversation.push({
+            role:"assistant",
+            content:response
+        });
+
+    },900);
+
+}
+
+/* MESSAGE */
+
+function addMessage(type,text){
+
+    const div = document.createElement("div");
+
+    div.className = "message";
+
+    const avatar =
+        type === "user"
+        ? `<div class="avatar user-avatar">EU</div>`
+        : `<div class="avatar ai-avatar">✦</div>`;
+
+    const name =
+        type === "user"
+        ? "Você"
+        : "SYSTEM BREAKERS IA";
+
+    div.innerHTML = `
+        ${avatar}
+        <div class="message-content">
+            <div class="name">${name}</div>
+            <div>${formatText(text)}</div>
+        </div>
+    `;
+
+    messages.appendChild(div);
+
+    window.scrollTo({
+        top:document.body.scrollHeight,
+        behavior:"smooth"
+    });
+
+}
+
+/* FORMAT */
+
+function formatText(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/\n/g,"<br>");
+}
+
+/* LOCAL DEMO AI */
+
+function localAI(text){
+
+    const t = text.toLowerCase();
+
+    if(t.includes("olá") || t.includes("oi")){
+
+        return "Olá! 👋 Eu sou a SYSTEM BREAKERS IA. Estou pronta para ajudar você.";
+
+    }
+
+    if(t.includes("program") || t.includes("código")){
+
+        return "Claro! 💻 Posso ajudar a criar, explicar, corrigir ou estruturar seu código. Na próxima etapa vamos conectar esta interface a uma IA real.";
+
+    }
+
+    if(t.includes("projeto")){
+
+        return "Vamos transformar essa ideia em um projeto real. 🚀 Me diga o que você quer construir e eu posso ajudar a estruturar tudo.";
+
+    }
+
+    return "Entendi. ✦ Esta é a interface da SYSTEM BREAKERS IA. A conexão com o modelo de IA real será adicionada na Parte 2.";
+}
+
+/* TYPING */
+
+function showTyping(){
+
+    const div = document.createElement("div");
+
+    div.className = "message";
+    div.id = "typingMessage";
+
+    div.innerHTML = `
+        <div class="avatar ai-avatar">✦</div>
+
+        <div class="message-content">
+
+            <div class="name">SYSTEM BREAKERS IA</div>
+
+            <div class="typing" style="display:flex">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+    `;
+
+    messages.appendChild(div);
+
+    window.scrollTo({
+        top:document.body.scrollHeight,
+        behavior:"smooth"
+    });
+
+}
+
+function hideTyping(){
+
+    const typing =
+        document.getElementById("typingMessage");
+
+    if(typing) typing.remove();
+
+}
+
+/* QUICK PROMPTS */
+
+function quickPrompt(text){
+
+    promptInput.value = text;
+
+    promptInput.focus();
+
+    sendMessage();
+
+}
+
+/* NEW CHAT */
+
+function newChat(){
+
+    conversation = [];
+
+    messages.innerHTML = "";
+
+    messages.style.display = "none";
+
+    hero.style.display = "flex";
+
+    promptInput.value = "";
+
+    closeSidebar();
+
+}
+
+/* SETTINGS */
+
+function openSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.add("show");
+
+}
+
+function closeSettings(){
+
+    document
+        .getElementById("settingsModal")
+        .classList.remove("show");
+
+}
+
+/* SIDEBAR MOBILE */
+
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
+
+function closeSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
+
+}
+
+/* HOME */
+
+function showHome(){
+
+    newChat();
+
+}
+
+/* VOICE */
+
+function voiceInput(){
+
+    if(!("webkitSpeechRecognition" in window)){
+
+        alert("O reconhecimento de voz não é suportado neste navegador.");
+
+        return;
+
+    }
+
+    const recognition =
+        new webkitSpeechRecognition();
+
+    recognition.lang = "pt-BR";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+
+        promptInput.placeholder =
+            "Ouvindo...";
+
+    };
+
+    recognition.onresult = event => {
+
+        promptInput.value =
+            event.results[0][0].transcript;
+
+        promptInput.dispatchEvent(
+            new Event("input")
+        );
+
+    };
+
+    recognition.onend = () => {
+
+        promptInput.placeholder =
+            "Pergunte qualquer coisa...";
+
+    };
+
+    recognition.start();
+
+}
+
+/* CLOSE MODAL */
+
+document
+    .getElementById("settingsModal")
+    .addEventListener("click",event => {
+
+        if(event.target.id === "settingsModal"){
+
+            closeSettings();
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
